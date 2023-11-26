@@ -33,8 +33,7 @@ public class UserController {
 
     @PostMapping("/register")
     public @ResponseBody String createNewUser(@RequestParam String username, @RequestParam String email,
-                                              @RequestParam String phoneNumber, @RequestParam String birthday,
-                                              @RequestParam String password) {
+                                              @RequestParam String phoneNumber, @RequestParam String password) {
         if (userRepository.findUserByEmail(email) != null) {
             return "Email has been registered!";
         }
@@ -44,7 +43,7 @@ public class UserController {
             customer = new Role("CUSTOMER");
         }
 
-        User user = new User(username, email, phoneNumber,birthday, password);
+        User user = new User(username, email, phoneNumber, password);
         user.setRole(customer);
         userRepository.save(user);
         return "Success!";
@@ -71,6 +70,23 @@ public class UserController {
     @GetMapping( "/all")
     public @ResponseBody Iterable<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @DeleteMapping ("/deleteAcc")
+    public @ResponseBody String deleteUser(@RequestParam String email,
+                                           @RequestParam String password) {
+        if (userRepository.findUserByEmail(email) == null) {
+            return "Email has not been registered!";
+        } else {
+            User user = userRepository.findUserByEmail(email);
+            if (!user.getPassword().equals(password)) {
+                return "INCORRECT EMAIL OR PASSWORD!";
+            } else {
+                //需要跳转用户页面
+                userRepository.delete(user);
+                return "DELETE SUCCESS!";
+            }
+        }
     }
 
 

@@ -14,18 +14,16 @@ public class User {
     private String username;
     private String email;
     private String phoneNumber;
-    private String birthday;
 
     @ManyToOne
     @JoinColumn (name = "roleId")
     private Role role;
     private String password;
 
-    public User(String username, String email, String phoneNumber, String birthday, String password) {
+    public User(String username, String email, String phoneNumber, String password) {
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.birthday = birthday;
         this.password = password;
     }
 
@@ -78,14 +76,6 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
     }
 
     public Role getRole() {
