@@ -3,8 +3,6 @@ package com.example.demo.Model;
 
 import jakarta.persistence.*;
 
-import java.util.Optional;
-
 @Entity
 public class User {
     @Id
