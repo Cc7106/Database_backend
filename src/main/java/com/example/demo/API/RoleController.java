@@ -3,7 +3,6 @@ package com.example.demo.API;
 
 import com.example.demo.Dao.RoleRepository;
 import com.example.demo.Model.Role;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
