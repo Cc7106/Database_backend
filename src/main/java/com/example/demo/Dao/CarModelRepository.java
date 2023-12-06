@@ -2,9 +2,12 @@ package com.example.demo.Dao;
 
 import com.example.demo.Model.Car.CarMake;
 import com.example.demo.Model.Car.CarModel;
+import com.example.demo.Model.Car.CarStatus;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -35,5 +38,10 @@ public interface CarModelRepository extends CrudRepository<CarModel, String> {
             "c.fuelSource.type = :fuelSource AND c.name LIKE %:name%")
     ArrayList<CarModel> findCarModelByCMnFSnName(String carMake, String fuelSource, String name);
 
+
+    @Modifying
+    @Transactional
+    @Query ("update CarModel c set c.availableNow = :status where c.id = :carModelId")
+    void updateCarModelAvailableNow(String carModelId, Boolean status);
 
 }

@@ -1,9 +1,12 @@
 package com.example.demo.Model.Car;
 
+import com.example.demo.Model.Booking.Booking;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity @Table
@@ -35,6 +38,16 @@ public class CarModel {
     @NotNull
     private float pricePerDay;
 
+    private Boolean availableNow = true;
+
+
+    public void setPricePerDay(float pricePerDay) {
+        this.pricePerDay = pricePerDay;
+    }
+
+    public Boolean getAvailableNow() {
+        return availableNow;
+    }
 
     public String getId() {
         return id;
@@ -109,23 +122,19 @@ public class CarModel {
                 '}';
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (o instanceof CarModel) {
-//            if (this.id.equals(((CarModel)o).getId())) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, name, quantity, carMake, carCategory, fuelSource, pricePerDay);
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof CarModel) {
+            if (this.id.equals(((CarModel)o).getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-    //    @JsonValue
-//    public String toJson() {
-//
-//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, quantity, carMake, carCategory, fuelSource, pricePerDay);
+    }
+
 }

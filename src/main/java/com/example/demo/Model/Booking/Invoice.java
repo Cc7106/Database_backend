@@ -7,8 +7,8 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Entity @Table
 public class Invoice {
     @Id @NotNull
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue (strategy = GenerationType.UUID)
+    private String id;
 
     @OneToOne
     @JoinColumn (name =  "bookingId")
@@ -25,11 +25,11 @@ public class Invoice {
     @JoinColumn (name = "admin-in-charge")
     private User AdminInCharge;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
