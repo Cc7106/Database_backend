@@ -29,10 +29,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String email,
+    public ResponseEntity<User> login(@RequestParam String email,
                                         @RequestParam String password) {
         User user = userService.login(email, password);
-        return ResponseEntity.ok(user.getRole().getRoleName());
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping( "/all")

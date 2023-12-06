@@ -10,8 +10,8 @@ import java.sql.Date;
 @Entity @Table
 public class Booking {
     @Id @NotNull
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @NotNull
     @ManyToOne
@@ -40,11 +40,23 @@ public class Booking {
     @NotNull
     private float PriceToPay;
 
-    public int getId() {
+    public Booking(User customer, Car car, Date dateToCollect, int days, float priceToPay) {
+        this.customer = customer;
+        this.car = car;
+        this.dateToCollect = dateToCollect;
+        this.days = days;
+        this.PriceToPay = priceToPay;
+    }
+
+    public Booking() {
+
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

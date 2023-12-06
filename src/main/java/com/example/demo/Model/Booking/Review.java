@@ -6,10 +6,9 @@ import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity @Table
 public class Review {
-
     @Id @NotNull
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue (strategy = GenerationType.UUID)
+    private String id;
 
     @NotNull
     private int rating;
@@ -21,11 +20,11 @@ public class Review {
     @JoinColumn (name = "bookingId")
     private Booking booking;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

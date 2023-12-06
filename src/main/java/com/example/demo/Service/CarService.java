@@ -1,10 +1,15 @@
 package com.example.demo.Service;
 
 import com.example.demo.Dao.*;
+import com.example.demo.Exception.NoAvailableCarException;
+import com.example.demo.Model.Car.Car;
 import com.example.demo.Model.Car.CarMake;
 import com.example.demo.Model.Car.CarModel;
+import com.example.demo.Model.Car.CarStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -46,11 +51,6 @@ public class CarService {
             list3 = carModelRepository.findCarModelByName(carModelName);
         }
 
-
-//        List<CarModel> intersection = list1.stream()
-//                .distinct()
-//                .filter(list2::contains).filter(list3::contains)
-//                .toList();
         ArrayList<CarModel> finalList = new ArrayList<>();
 
         for (int i = 0; i < list1.size(); i++) {
@@ -128,5 +128,56 @@ public class CarService {
         }
     }
 
+    public Car getACar(String carModelId) {
+        CarModel carModel = carModelRepository.findById(carModelId).orElse(null);
+        assert carModel != null;
+        for (Car car: carRepository.findCarsByModelId(carModelId)) {
+            if (car.isAvailable()) {
+                return car;
+            }
+        }
+        return null;
+    }
+
+
+
+    public void setCar4Rent(Car car) {
+        CarStatus carStatus = carStatusRepository.findCarStatusByString("RENT");
+        carRepository.updateCarStatus(car.getId(), carStatus);
+        checkNSetAvailable(car.getCarModel());
+    }
+
+    public void returnCar(Car car) {
+        CarStatus carStatus = carStatusRepository.findCarStatusByString("AVAILABLE");
+        carRepository.updateCarStatus(car.getId(), carStatus);
+        checkNSetAvailable(car.getCarModel());
+    }
+
+    public void checkNSetAvailable(CarModel carModel) {
+        for (Car car: carRepository.findCarsByModelId(carModel.getId())) {
+            if (car.getCarStatus().getStatus().equals("AVAILABLE")) {
+                carModelRepository.updateCarModelAvailableNow(carModel.getId(), true);
+                return;
+            }
+        }
+        carModelRepository.updateCarModelAvailableNow(carModel.getId(), false);
+    }
+
+
+
+    public Boolean isCarModelAvailable(String carModelId) {
+        Iterable<Car> cars = carRepository.findCarsByModelId(carModelId);
+        for (Car car: cars) {
+            if (car.getCarStatus().getStatus().equals("AVAILABLE")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public Car getCarbyCarId(String carId) {
+        return carRepository.findById(carId).orElse(null);
+    }
 
 }

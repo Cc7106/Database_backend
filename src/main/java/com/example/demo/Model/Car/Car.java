@@ -1,5 +1,6 @@
 package com.example.demo.Model.Car;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -16,7 +17,6 @@ public class Car {
     @ManyToOne
     @JoinColumn (name = "carModelId")
     private CarModel carModel;
-
 
     @NotNull
     @ManyToOne
@@ -52,9 +52,14 @@ public class Car {
         return carStatus;
     }
 
+
     public void setCarStatus(CarStatus carStatus) {
         this.carStatus = carStatus;
     }
 
+    @JsonIgnore
+    public Boolean isAvailable() {
+        return carStatus.getStatus().equals("AVAILABLE");
+    }
 }
 
