@@ -32,7 +32,7 @@ public class BookingService {
     UserService userService;
 
     public Booking makeABooking(int customerId, String carId, Date dateToCollect,
-                                int days, float priceToPay) {
+                                int days, float priceToPay, String name, String contactNumber, String licenseNo) {
         User customer = userService.getUserById(customerId);
         if (customer == null) {
             throw new UserNotFoundException();
@@ -47,7 +47,8 @@ public class BookingService {
 
         //下单
         carService.setCar4Rent(car);
-        Booking booking = new Booking(customer, car, dateToCollect, days, priceToPay);
+        Booking booking = new Booking(customer, car, dateToCollect, days, priceToPay,
+                name, contactNumber, licenseNo);
         booking.setBookingStatus(pendingStatus);
         bookingRepository.save(booking);
         return booking;

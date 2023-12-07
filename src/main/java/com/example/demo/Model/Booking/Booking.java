@@ -40,12 +40,19 @@ public class Booking {
     @NotNull
     private float PriceToPay;
 
-    public Booking(User customer, Car car, Date dateToCollect, int days, float priceToPay) {
+    private String name;
+    private String contactNumber;
+    private String licenseNo;
+
+    public Booking(User customer, Car car, Date dateToCollect, int days, float priceToPay, String name, String contactNumber, String licenseNo) {
         this.customer = customer;
         this.car = car;
         this.dateToCollect = dateToCollect;
         this.days = days;
         this.PriceToPay = priceToPay;
+        this.name = name;
+        this.contactNumber = contactNumber;
+        this.licenseNo = licenseNo;
     }
 
     public Booking() {
@@ -114,5 +121,29 @@ public class Booking {
 
     public void setPriceToPay(float priceToPay) {
         PriceToPay = priceToPay;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getLicenseNo() {
+        return licenseNo;
+    }
+
+    public void setLicenseNo(String licenseNo) {
+        this.licenseNo = licenseNo;
     }
 }
