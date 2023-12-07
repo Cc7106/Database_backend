@@ -19,8 +19,9 @@ public class BookingController {
 
     @PostMapping("/createBooking")
     public ResponseEntity<Booking> createNewBooking(@RequestParam int customerId, @RequestParam String carId, @RequestParam Date dateToCollect,
-                                                  @RequestParam int days, @RequestParam float priceToPay) {
-        Booking booking =  bookingService.makeABooking(customerId, carId, dateToCollect, days, priceToPay);
+                                                  @RequestParam int days, @RequestParam float priceToPay, @RequestParam String name,
+                                                    @RequestParam  String contactNumber, @RequestParam  String licenseNo) {
+        Booking booking =  bookingService.makeABooking(customerId, carId, dateToCollect, days, priceToPay, name, contactNumber, licenseNo);
         return ResponseEntity.ok(booking);
     }
 
