@@ -12,7 +12,6 @@ public class User {
     private String username;
     private String email;
     private String phoneNumber;
-
     @ManyToOne
     @JoinColumn (name = "roleId")
     private Role role;

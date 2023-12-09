@@ -14,6 +14,7 @@ import com.example.demo.Model.Booking.Invoice;
 import com.example.demo.Model.Car.Car;
 import com.example.demo.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -44,13 +45,19 @@ public class BookingService {
         }
 
         BookingStatus pendingStatus = bookingStatusRepository.findBookingStatusByString("PENDING");
-
-        //下单
-        carService.setCar4Rent(car);
         Booking booking = new Booking(customer, car, dateToCollect, days, priceToPay,
                 name, contactNumber, licenseNo);
         booking.setBookingStatus(pendingStatus);
-        bookingRepository.save(booking);
+        //下单
+        try {
+            booking = bookingRepository.save(booking);
+        } catch (Exception e) {
+            //触发constraint
+            Throwable rootCause = e.getCause().getCause();
+            throw new DataIntegrityViolationException(rootCause.getMessage());
+        }
+        //成功
+        carService.setCar4Rent(car);
         return booking;
     }
 
@@ -81,7 +88,8 @@ public class BookingService {
     }
 
     public ArrayList<Booking> getBookingByUserId(int userId) {
-        return bookingRepository.findBookingByCustomerId(userId);
+        User user = userService.getUserById(userId);
+        return bookingRepository.findBookingByCustomerId(user.getId());
     }
 
 }
