@@ -4,10 +4,21 @@ import com.example.demo.Dao.RoleRepository;
 import com.example.demo.Dao.UserRepository;
 import com.example.demo.Exception.LoginException;
 import com.example.demo.Exception.RegistrationException;
+import com.example.demo.Exception.UserNotFoundException;
 import com.example.demo.Model.Role;
 import com.example.demo.Model.User;
+import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.mapping.Constraint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Set;
+//import javax.validation.ConstraintViolation;
+//import javax.validation.ConstraintViolationException;
 
 @Service
 public class UserService {
@@ -30,7 +41,16 @@ public class UserService {
         }
         User user = new User(username, email, phoneNumber, password);
         user.setRole(customer);
-        return userRepository.save(user);
+
+        try {
+            return userRepository.save(user);
+        } catch (Exception e) {
+            //触发constraint
+            Throwable rootCause = e.getCause().getCause();
+            throw new DataIntegrityViolationException(rootCause.getMessage());
+        }
+
+
     }
 
 
@@ -49,7 +69,11 @@ public class UserService {
     }
 
     public User getUserById(int id) {
-        return userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user;
     }
 
 
