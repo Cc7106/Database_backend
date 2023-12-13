@@ -13,13 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Set;
-//import javax.validation.ConstraintViolation;
-//import javax.validation.ConstraintViolationException;
-
 @Service
 public class UserService {
 
@@ -69,11 +62,11 @@ public class UserService {
     }
 
     public User getUserById(int id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
-        return user;
+        return userRepository.findById(id).orElse(null);
+//        if (user == null) {
+//            throw new UserNotFoundException();
+//        }
+//        return user;
     }
 
 

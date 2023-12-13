@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity @Table
 public class Booking {
@@ -145,5 +146,20 @@ public class Booking {
 
     public void setLicenseNo(String licenseNo) {
         this.licenseNo = licenseNo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Booking) {
+            if (this.id.equals(((Booking)o).getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, customer, car, dateToCollect, days, invoice, bookingStatus, PriceToPay, name, contactNumber, licenseNo);
     }
 }
