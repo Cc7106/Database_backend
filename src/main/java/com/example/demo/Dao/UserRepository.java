@@ -21,6 +21,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
 
     @Modifying @Transactional
-    @Query(value = "ALTER TABLE user ADD CONSTRAINT EmailFormatCheck CHECK (email REGEXP '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$')", nativeQuery = true)
+    @Query(value = "ALTER TABLE user ADD CONSTRAINT EmailFormatCheck CHECK (email REGEXP '^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\\\.)+[a-z]{2,}$')", nativeQuery = true)
     void addConstraintForEmail();
 }

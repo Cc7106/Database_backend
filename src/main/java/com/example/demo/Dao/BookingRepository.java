@@ -8,16 +8,31 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public interface BookingRepository extends CrudRepository<Booking, String> {
 
-    @Query("select b from Booking b where b.customer.id = :id")
+    @Query("select b from Booking b order by b.dateToCollect ASC")
+    Iterable<Booking> findAll();
+
+    @Query("select b from Booking b where b.customer.id = :id order by b.dateToCollect ASC")
     ArrayList<Booking> findBookingByCustomerId(int id);
 
+    @Query("select b from Booking b where b.dateToCollect = :date")
+    ArrayList<Booking> findBookingByDateToCollect(Date date);
+    @Query("select b from Booking b where b.bookingStatus.status = :bookingStatus order by b.dateToCollect ASC")
+    ArrayList<Booking> findBookingByBookingStatus(String bookingStatus);
+    @Query("select b from Booking b where b.car.carModel.name LIKE %:carModelName% order by b.dateToCollect ASC")
+    ArrayList<Booking> findBookingByCarModel(String carModelName);
+
+    @Query("select b from Booking b where b.dateToCollect = :date order by b.PriceToPay DESC")
+    ArrayList<Booking> sortBookingsByPrice(Date date);
+    @Query("select b from Booking b order by b.PriceToPay DESC")
+    ArrayList<Booking> sortAllBookingsByPrice();
 
     @Modifying @Transactional
-    @Query("update Booking  b set b.bookingStatus = :bookingStatus where b.id = :bookingId")
+    @Query("update Booking  b set b.bookingStatus = :bookingStatus where b.id = :bookingId ")
     void updateBookingStatus(String bookingId, BookingStatus bookingStatus);
 
 
@@ -33,5 +48,6 @@ public interface BookingRepository extends CrudRepository<Booking, String> {
     @Modifying @Transactional
     @Query(value = "ALTER TABLE booking ADD CONSTRAINT LicenseNoCheck CHECK(LENGTH(license_no) = 12)" , nativeQuery = true)
     void addConstraintForLicenseNo();
+
 
 }

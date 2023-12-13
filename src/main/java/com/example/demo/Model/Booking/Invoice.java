@@ -1,6 +1,7 @@
 package com.example.demo.Model.Booking;
 
 import com.example.demo.Model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -10,6 +11,7 @@ public class Invoice {
     @GeneratedValue (strategy = GenerationType.UUID)
     private String id;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn (name =  "bookingId")
     private Booking booking;
@@ -24,6 +26,16 @@ public class Invoice {
     @ManyToOne
     @JoinColumn (name = "admin-in-charge")
     private User AdminInCharge;
+
+    public Invoice(Booking booking, float totalPrice, User adminInCharge) {
+        this.booking = booking;
+        this.totalPrice = totalPrice;
+        this.paid = true;
+        AdminInCharge = adminInCharge;
+    }
+
+    public Invoice() {
+    }
 
     public String getId() {
         return id;

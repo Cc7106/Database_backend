@@ -27,7 +27,13 @@ public class BookingController {
 
     @PostMapping("/cancelBooking")
     public ResponseEntity<Booking> cancelBooking(@RequestParam String bookingId) {
-        Booking booking = bookingService.cancelBooking(bookingId);
+        Booking booking = bookingService.setBookingToCancelled(bookingId);
+        return ResponseEntity.ok(booking);
+    }
+
+    @PostMapping("/returnCar")
+    public ResponseEntity<Booking> returnCar(@RequestParam String bookingId) {
+        Booking booking = bookingService.setBookingToDone(bookingId);
         return ResponseEntity.ok(booking);
     }
 
@@ -37,13 +43,28 @@ public class BookingController {
     }
 
     @GetMapping("/checkUsersBooking")
-    public @ResponseBody Iterable<Booking> checkUserspBooking(int customerId) {
+    public @ResponseBody Iterable<Booking> checkUsersBooking(@RequestParam int customerId) {
         return bookingService.getBookingByUserId(customerId);
     }
 
     @GetMapping("/getBooking")
-    public ResponseEntity<Booking> getBookingById(String bookingId) {
+    public ResponseEntity<Booking> getBookingById(@RequestParam String bookingId) {
         Booking booking = bookingService.getBookingById(bookingId);
         return ResponseEntity.ok(booking);
+    }
+
+    @DeleteMapping("/deleteBooking")
+    public ResponseEntity<Void> deleteBookingById(@RequestParam String bookingId) {
+        bookingService.deleteBooking(bookingId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/filterBooking")
+    public @ResponseBody Iterable<Booking> searchBooking(@RequestParam String bookingId, @RequestParam String carModelName,
+                                                         @RequestParam String bookingStatus, @RequestParam String date) {
+        //检查是否有欠费
+        bookingService.refreshStatus();
+        Iterable<Booking> bookings = bookingService.filterBookings(bookingId, carModelName, bookingStatus, date);
+        return bookings;
     }
 }

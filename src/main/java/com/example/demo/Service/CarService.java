@@ -153,6 +153,12 @@ public class CarService {
         checkNSetAvailable(car.getCarModel());
     }
 
+    public void setCarDown(Car car) {
+        CarStatus carStatus = carStatusRepository.findCarStatusByString("DOWN");
+        carRepository.updateCarStatus(car.getId(), carStatus);
+        checkNSetAvailable(car.getCarModel());
+    }
+
     public void checkNSetAvailable(CarModel carModel) {
         for (Car car: carRepository.findCarsByModelId(carModel.getId())) {
             if (car.getCarStatus().getStatus().equals("AVAILABLE")) {
