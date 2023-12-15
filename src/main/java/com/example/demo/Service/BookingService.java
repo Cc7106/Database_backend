@@ -61,12 +61,12 @@ public class BookingService {
         return booking;
     }
 
-    public void setBookingToOnGoing(Booking booking) {
+    public void setBookingToOnGoing(Booking booking, Invoice invoice) {
         BookingStatus bookingStatus = bookingStatusRepository.findBookingStatusByString("ON-GOING");
         booking.setBookingStatus(bookingStatus);
-//        booking.setInvoice(invoice);
+        booking.setInvoice(invoice);
         bookingRepository.updateBookingStatus(booking.getId(), bookingStatus);
-//        bookingRepository.updateInvoiceId(booking.getId(), invoice);
+        bookingRepository.updateInvoiceId(booking.getId(), invoice);
     }
 
     public Booking setBookingToCancelled(String bookingId) {

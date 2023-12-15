@@ -36,10 +36,10 @@ public interface BookingRepository extends CrudRepository<Booking, String> {
     void updateBookingStatus(String bookingId, BookingStatus bookingStatus);
 
 
-//    @Modifying @Transactional
-//    @Query("update Booking  b set b.invoice = :invoice where b.id = :bookingId")
-//    void updateInvoiceId(String bookingId, Invoice invoice);
-//
+    @Modifying @Transactional
+    @Query("update Booking  b set b.invoice = :invoice where b.id = :bookingId")
+    void updateInvoiceId(String bookingId, Invoice invoice);
+
 
     @Modifying @Transactional
     @Query(value = "ALTER TABLE booking ADD CONSTRAINT ContactNumberCheck CHECK(LENGTH(contact_number) = 11)" , nativeQuery = true)

@@ -27,9 +27,9 @@ public class InvoiceService {
     public Invoice makeInvoice(String bookingId, int adminId) {
         Booking booking = bookingService.getBookingById(bookingId);
         User admin = userService.getUserById(adminId);
-        Invoice invoice = new Invoice(booking, booking.getPriceToPay(), admin);
+        Invoice invoice = new Invoice(booking.getPriceToPay(), admin);
         invoiceRepository.save(invoice);
-        bookingService.setBookingToOnGoing(booking);
+        bookingService.setBookingToOnGoing(booking, invoice);
         return invoice;
     }
 }

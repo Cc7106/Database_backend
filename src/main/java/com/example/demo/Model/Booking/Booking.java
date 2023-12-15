@@ -30,9 +30,9 @@ public class Booking {
     @NotNull
     private int days;
 
-//    @OneToOne
-//    @JoinColumn (name = "invoiceId")
-//    private Invoice invoice;
+    @OneToOne
+    @JoinColumn (name = "invoiceId")
+    private Invoice invoice;
 
     @ManyToOne
     @JoinColumn (name = "bookingStatusId")
@@ -100,13 +100,13 @@ public class Booking {
         this.days = days;
     }
 
-//    public Invoice getInvoice() {
-//        return invoice;
-//    }
-//
-//    public void setInvoice(Invoice invoice) {
-//        this.invoice = invoice;
-//    }
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
 
     public BookingStatus getBookingStatus() {
         return bookingStatus;

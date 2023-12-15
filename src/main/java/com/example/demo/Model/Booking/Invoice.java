@@ -11,9 +11,9 @@ public class Invoice {
     @GeneratedValue (strategy = GenerationType.UUID)
     private String id;
 
-    @OneToOne
-    @JoinColumn (name =  "bookingId")
-    private Booking booking;
+//    @OneToOne
+//    @JoinColumn (name =  "bookingId")
+//    private Booking booking;
 
     @NotNull
     private float totalPrice;
@@ -26,8 +26,8 @@ public class Invoice {
     @JoinColumn (name = "admin-in-charge")
     private User AdminInCharge;
 
-    public Invoice(Booking booking, float totalPrice, User adminInCharge) {
-        this.booking = booking;
+    public Invoice(float totalPrice, User adminInCharge) {
+       // this.booking = booking;
         this.totalPrice = totalPrice;
         this.paid = true;
         AdminInCharge = adminInCharge;
@@ -44,13 +44,13 @@ public class Invoice {
         this.id = id;
     }
 
-    public Booking getBooking() {
-        return booking;
-    }
-
-    public void setBooking(Booking booking) {
-        this.booking = booking;
-    }
+//    public Booking getBooking() {
+//        return booking;
+//    }
+//
+//    public void setBooking(Booking booking) {
+//        this.booking = booking;
+//    }
 
     public float getTotalPrice() {
         return totalPrice;
