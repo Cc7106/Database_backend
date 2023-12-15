@@ -6,6 +6,8 @@ import com.example.demo.Model.Booking.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class ReviewService {
     @Autowired
@@ -28,5 +30,31 @@ public class ReviewService {
 
     public Iterable<Review> getAllReviews() {
         return reviewRepository.findAll();
+    }
+
+    public ArrayList<Review> filterReviews(String carMake, String stars) {
+        ArrayList<Review> list1, list2;
+
+        if (carMake.equals("All")) {
+            list1 = (ArrayList<Review>) reviewRepository.findAll();
+        } else {
+            list1 = reviewRepository.findReviewByCarMake(carMake);
+        }
+
+        if (stars.equals("All")) {
+            list2 = (ArrayList<Review>) reviewRepository.findAll();
+        } else {
+            list2 = reviewRepository.findReviewByRating(Integer.parseInt(stars));
+        }
+
+        ArrayList<Review> finalList = new ArrayList<>();
+
+        for (int i = 0; i < list1.size(); i++) {
+            Review review = list1.get(i);
+            if (list2.contains(review)){
+                finalList.add(review);
+            }
+        }
+        return finalList;
     }
 }

@@ -29,4 +29,9 @@ public class ReviewController {
     public @ResponseBody Iterable<Review> getAllReviews() {
         return reviewService.getAllReviews();
     }
+
+    @GetMapping("/filterReviews")
+    public @ResponseBody Iterable<Review> filterReviews(@RequestParam String carMake, @RequestParam String stars) {
+        return reviewService.filterReviews(carMake, stars);
+    }
 }

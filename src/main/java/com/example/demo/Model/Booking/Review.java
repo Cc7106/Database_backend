@@ -4,6 +4,8 @@ import com.example.demo.Model.Booking.Booking;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.Objects;
+
 @Entity @Table
 public class Review {
     @Id @NotNull
@@ -60,5 +62,20 @@ public class Review {
 
     public void setBooking(Booking booking) {
         this.booking = booking;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Review) {
+            if (this.id.equals(((Review)o).getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, rating, content, booking);
     }
 }
