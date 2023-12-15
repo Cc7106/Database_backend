@@ -20,6 +20,16 @@ public class Review {
     @JoinColumn (name = "bookingId")
     private Booking booking;
 
+    public Review(int rating, String content, Booking booking) {
+        this.rating = rating;
+        this.content = content;
+        this.booking = booking;
+    }
+
+    public Review() {
+
+    }
+
     public String getId() {
         return id;
     }
