@@ -29,7 +29,7 @@ public class InvoiceService {
         User admin = userService.getUserById(adminId);
         Invoice invoice = new Invoice(booking, booking.getPriceToPay(), admin);
         invoiceRepository.save(invoice);
-        bookingService.setBookingToOnGoing(booking, invoice);
+        bookingService.setBookingToOnGoing(booking);
         return invoice;
     }
 }

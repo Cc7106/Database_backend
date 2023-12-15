@@ -18,7 +18,7 @@ public class ReviewService {
         Booking booking = bookingService.getBookingById(bookingId);
         Review review = new Review(stars, content, booking);
         reviewRepository.save(review);
-        bookingService.setBookingToReviewed(bookingId);
+        bookingService.setBookingToRated(bookingId);
         return review;
     }
 

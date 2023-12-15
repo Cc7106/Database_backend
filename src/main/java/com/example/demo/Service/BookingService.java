@@ -9,9 +9,7 @@ import com.example.demo.Exception.UserNotFoundException;
 import com.example.demo.Model.Booking.Booking;
 import com.example.demo.Model.Booking.BookingStatus;
 import com.example.demo.Model.Booking.Invoice;
-import com.example.demo.Model.Booking.Review;
 import com.example.demo.Model.Car.Car;
-import com.example.demo.Model.Car.CarModel;
 import com.example.demo.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -63,12 +61,12 @@ public class BookingService {
         return booking;
     }
 
-    public void setBookingToOnGoing(Booking booking, Invoice invoice) {
+    public void setBookingToOnGoing(Booking booking) {
         BookingStatus bookingStatus = bookingStatusRepository.findBookingStatusByString("ON-GOING");
         booking.setBookingStatus(bookingStatus);
-        booking.setInvoice(invoice);
+//        booking.setInvoice(invoice);
         bookingRepository.updateBookingStatus(booking.getId(), bookingStatus);
-        bookingRepository.updateInvoiceId(booking.getId(), invoice);
+//        bookingRepository.updateInvoiceId(booking.getId(), invoice);
     }
 
     public Booking setBookingToCancelled(String bookingId) {
@@ -109,13 +107,13 @@ public class BookingService {
         return booking;
     }
 
-    public Booking setBookingToReviewed(String bookingId) {
+    public Booking setBookingToRated(String bookingId) {
         Booking booking = bookingRepository.findById(bookingId).orElse(null);
         if (booking == null) {
             throw new BookingNotFoundException();
         }
 
-        BookingStatus bookingStatus = bookingStatusRepository.findBookingStatusByString("REVIEWED");
+        BookingStatus bookingStatus = bookingStatusRepository.findBookingStatusByString("RATED");
         bookingRepository.updateBookingStatus(booking.getId(), bookingStatus);
         booking.setBookingStatus(bookingStatus);
         return booking;
@@ -161,8 +159,6 @@ public class BookingService {
     public ArrayList<Booking> getSortedBookingList(Date date) {
         return bookingRepository.sortBookingsByPrice(date);
     }
-
-
 
 
 
@@ -227,4 +223,6 @@ public class BookingService {
         }
         return finalList;
     }
+
+
 }
