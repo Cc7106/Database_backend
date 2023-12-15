@@ -9,6 +9,7 @@ import com.example.demo.Exception.UserNotFoundException;
 import com.example.demo.Model.Booking.Booking;
 import com.example.demo.Model.Booking.BookingStatus;
 import com.example.demo.Model.Booking.Invoice;
+import com.example.demo.Model.Booking.Review;
 import com.example.demo.Model.Car.Car;
 import com.example.demo.Model.Car.CarModel;
 import com.example.demo.Model.User;
@@ -96,6 +97,30 @@ public class BookingService {
         return booking;
     }
 
+    public Booking setBookingToOverdue(String bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+        if (booking == null) {
+            throw new BookingNotFoundException();
+        }
+
+        BookingStatus bookingStatus = bookingStatusRepository.findBookingStatusByString("OVERDUE");
+        bookingRepository.updateBookingStatus(booking.getId(), bookingStatus);
+        booking.setBookingStatus(bookingStatus);
+        return booking;
+    }
+
+    public Booking setBookingToReviewed(String bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+        if (booking == null) {
+            throw new BookingNotFoundException();
+        }
+
+        BookingStatus bookingStatus = bookingStatusRepository.findBookingStatusByString("REVIEWED");
+        bookingRepository.updateBookingStatus(booking.getId(), bookingStatus);
+        booking.setBookingStatus(bookingStatus);
+        return booking;
+    }
+
 
     public Iterable<Booking> getAllBookings() {
         //同时检查是否有欠费
@@ -152,9 +177,12 @@ public class BookingService {
                 LocalDate date = booking.getDateToCollect().toLocalDate();
                 int days = booking.getDays();
                 if (date.plusDays(days).isBefore(todayDate)) {
-                    BookingStatus bookingStatus = bookingStatusRepository.findBookingStatusByString("OVERDUE");
-                    bookingRepository.updateBookingStatus(booking.getId(), bookingStatus);
-                    booking.setBookingStatus(bookingStatus);
+                    setBookingToOverdue(booking.getId());
+                }
+            } else if (booking.getBookingStatus().getStatus().equals("PENDING")) {
+                LocalDate date = booking.getDateToCollect().toLocalDate();
+                if (date.isBefore(todayDate)) {
+                    setBookingToCancelled(booking.getId());
                 }
             }
         }
