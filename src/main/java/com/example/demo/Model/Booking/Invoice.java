@@ -11,7 +11,6 @@ public class Invoice {
     @GeneratedValue (strategy = GenerationType.UUID)
     private String id;
 
-    @JsonIgnore
     @OneToOne
     @JoinColumn (name =  "bookingId")
     private Booking booking;
