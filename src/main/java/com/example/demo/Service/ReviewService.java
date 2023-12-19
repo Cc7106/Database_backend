@@ -24,9 +24,9 @@ public class ReviewService {
         return review;
     }
 
-    public Review getReview(String bookingId) {
-        return reviewRepository.findReviewByBooking(bookingId);
-    }
+//    public Review getReview(String bookingId) {
+//        return reviewRepository.findReviewByBooking(bookingId);
+//    }
 
     public Iterable<Review> getAllReviews() {
         return reviewRepository.findAll();

@@ -189,10 +189,11 @@ public class BookingService {
         if (bookingId.isEmpty()) {
             list1 = (ArrayList<Booking>) bookingRepository.findAll();
         } else {
-            Booking booking = bookingRepository.findById(bookingId).orElse(null);
-            return new ArrayList<>() {{
-                add(booking);
-            }};
+            list1 = (ArrayList<Booking>) bookingRepository.findBookingById(bookingId);
+//            Booking booking = bookingRepository.findById(bookingId).orElse(null);
+//            return new ArrayList<>() {{
+//                add(booking);
+//            }};
         }
 
         if (carModelName.isEmpty()) {
