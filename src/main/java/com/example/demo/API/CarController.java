@@ -54,6 +54,12 @@ public class CarController {
 
     }
 
+    @GetMapping("getAllCars")
+    public @ResponseBody Iterable<Car> getAllCars() {
+        return carService.getAllCars();
+    }
+
+
     //测试rent功能的操作
 //    @PostMapping("/rentACar")
 //    public @ResponseBody void rentACar(@RequestParam String carModelId) {

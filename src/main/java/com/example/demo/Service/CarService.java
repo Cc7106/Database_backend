@@ -186,4 +186,7 @@ public class CarService {
         return carRepository.findById(carId).orElse(null);
     }
 
+    public Iterable<Car> getAllCars() {
+        return carRepository.findAll();
+    }
 }
