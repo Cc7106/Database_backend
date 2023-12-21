@@ -70,10 +70,14 @@ public class UserService {
     }
 
 
+    public void adminDoEditRole(String userId, String roleName) {
+        int id = Integer.parseInt(userId);
+        User user = getUserById(id);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        Role role = roleRepository.findByName(roleName);
+        userRepository.editRole(id, role);
 
-
-
-
-
-
+    }
 }

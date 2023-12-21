@@ -1,5 +1,6 @@
 package com.example.demo.Dao;
 
+import com.example.demo.Model.Role;
 import com.example.demo.Model.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserRepository extends CrudRepository<User, Integer> {
     @Query ("SELECT u from User u where u.email = :email")
     User findUserByEmail(@Param("email")String email);
+
+    @Modifying @Transactional
+    @Query("update User u set u.role =:role where u.id = :id")
+    void editRole(@Param("id") int id, @Param("role") Role role);
 
     @Modifying @Transactional
     @Query(value = "ALTER TABLE user ADD CONSTRAINT PhoneNumberCheck CHECK(LENGTH(phone_number) = 11)" , nativeQuery = true)

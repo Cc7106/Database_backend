@@ -57,6 +57,12 @@ public class UserController {
         }
     }
 
+    @PostMapping("/editRole")
+    public ResponseEntity<Void> editRole(@RequestParam String userId, @RequestParam String role) {
+        userService.adminDoEditRole(userId, role);
+        return ResponseEntity.ok().build();
+    }
+
 
 //    @PostMapping("/add")
 //    public @ResponseBody String addNewUser(@RequestParam String email,
