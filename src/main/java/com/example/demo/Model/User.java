@@ -17,11 +17,14 @@ public class User {
     private Role role;
     private String password;
 
+    private int booking_ongoing;
+
     public User(String username, String email, String phoneNumber, String password) {
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.booking_ongoing = 0;
     }
 
     public User(String username, String email, String password) {
@@ -81,5 +84,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public int getBooking_ongoing() {
+        return booking_ongoing;
+    }
+
+    public void setBooking_ongoing(int booking_ongoing) {
+        this.booking_ongoing = booking_ongoing;
     }
 }
