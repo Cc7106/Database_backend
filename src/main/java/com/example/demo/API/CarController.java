@@ -67,7 +67,4 @@ public class CarController {
 //        carService.setCar4Rent(car.getId());
 //    }
 
-
-
-
 }

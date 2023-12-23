@@ -38,4 +38,16 @@ public class ProcedureCreationService {
 
         entityManager.createNativeQuery(procedureQuery).executeUpdate();
     }
+
+    @Transactional
+    public void createProcedureValidateEmail() {
+        String procedureQuery =
+                "CREATE PROCEDURE ValidateEmail(email VARCHAR(255))\n" +
+                        "BEGIN\n" +
+                        "    IF email NOT REGEXP '^[a-zA-Z0-9]+[-._a-zA-Z0-9]*@[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*\\\\.[a-zA-Z]{2,}$' THEN\n" +
+                        "        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Check constraint ''EmailFormatCheck'' is violated.';\n" +
+                        "    END IF;\n" +
+                        "END";
+        entityManager.createNativeQuery(procedureQuery).executeUpdate();
+    }
 }

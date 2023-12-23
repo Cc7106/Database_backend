@@ -31,4 +31,15 @@ public class TriggerService {
                 "END;";
         entityManager.createNativeQuery(sql).executeUpdate();
     }
+
+    @Transactional
+    public void createTriggerEmail() {
+        String sql = "CREATE TRIGGER before_insert_user\n" +
+                "BEFORE INSERT ON user\n" +
+                "FOR EACH ROW\n" +
+                "BEGIN\n" +
+                "    CALL ValidateEmail(NEW.email);\n" +
+                "END";
+        entityManager.createNativeQuery(sql).executeUpdate();
+    }
 }

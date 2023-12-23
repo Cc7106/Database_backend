@@ -20,11 +20,6 @@ public class ReviewController {
         return ResponseEntity.ok(review);
     }
 
-//    @GetMapping("/getReview")
-//    public ResponseEntity<Review> getReview(@RequestParam String bookingId) {
-//        return ResponseEntity.ok(reviewService.getReview(bookingId));
-//    }
-
     @GetMapping("/getAllReviews")
     public @ResponseBody Iterable<Review> getAllReviews() {
         return reviewService.getAllReviews();
