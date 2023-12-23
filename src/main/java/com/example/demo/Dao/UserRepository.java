@@ -24,8 +24,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value = "ALTER TABLE user ADD CONSTRAINT PasswordCheck CHECK(LENGTH(password) >= 8 AND LENGTH(password) <= 20)" , nativeQuery = true)
     void addConstraintForPassword();
 
-
-    @Modifying @Transactional
-    @Query(value = "ALTER TABLE user ADD CONSTRAINT EmailFormatCheck CHECK (email REGEXP '^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\\\.)+[a-z]{2,}$')", nativeQuery = true)
-    void addConstraintForEmail();
+//    @Modifying @Transactional
+//    @Query(value = "ALTER TABLE user ADD CONSTRAINT EmailFormatCheck CHECK (email REGEXP \'^[a-zA-Z0-9]+[-._a-zA-Z0-9]*@[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*\\.[a-zA-Z]{2,}$\')" , nativeQuery = true)
+//    void addConstraintForEmail();
 }

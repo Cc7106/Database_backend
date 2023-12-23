@@ -13,12 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping( "/user")
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
     private UserService userService;
 
     @PostMapping("/register")
@@ -37,25 +31,9 @@ public class UserController {
 
     @GetMapping( "/all")
     public @ResponseBody Iterable<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 
-    @DeleteMapping ("/deleteAcc")
-    public @ResponseBody String deleteUser(@RequestParam String email ,
-                                           @RequestParam String password) {
-        if (userRepository.findUserByEmail(email) == null) {
-            return "Email has not been registered!";
-        } else {
-            User user = userRepository.findUserByEmail(email);
-            if (!user.getPassword().equals(password)) {
-                return "INCORRECT EMAIL OR PASSWORD!";
-            } else {
-                //需要跳转用户页面
-                userRepository.delete(user);
-                return "DELETE SUCCESS!";
-            }
-        }
-    }
 
     @PostMapping("/editRole")
     public ResponseEntity<Void> editRole(@RequestParam String userId, @RequestParam String role) {

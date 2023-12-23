@@ -20,14 +20,18 @@ public class DatabaseInitializer implements CommandLineRunner {
     @Autowired
     private TriggerService triggerService;
 
+
+    //第一次运行过后就不需要了
     @Override
     public void run(String... args) throws Exception {
-//        userRepository.addConstraintForPhoneNumber();
-//        userRepository.addConstraintForPassword();
-//        userRepository.addConstraintForEmail();
-//        bookingRepository.addConstraintForContactNumber();
-//        bookingRepository.addConstraintForLicenseNo();
-          procedureCreationService.createProcedure();
-          triggerService.createTrigger();
+      //  userRepository.addConstraintForPhoneNumber();
+        //userRepository.addConstraintForPassword();
+       // userRepository.addConstraintForEmail();
+       // bookingRepository.addConstraintForContactNumber();
+       // bookingRepository.addConstraintForLicenseNo();
+       /// procedureCreationService.createProcedure();
+        //triggerService.createTrigger();
+        procedureCreationService.createProcedureValidateEmail();
+        triggerService.createTriggerEmail();
     }
 }

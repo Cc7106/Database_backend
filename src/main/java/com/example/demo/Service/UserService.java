@@ -82,4 +82,8 @@ public class UserService {
         userRepository.editRole(id, role);
 
     }
+
+    public Iterable<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 }
